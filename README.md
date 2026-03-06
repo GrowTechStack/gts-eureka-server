@@ -1,6 +1,6 @@
 # GrowTechStack Eureka Server
 
-마이크로서비스 간의 위치를 파악하고 관리하는 서비스 디스커버리 서버입니다.
+마이크로서비스 인스턴스를 등록하고 위치를 관리하는 서비스 디스커버리 서버입니다.
 
 ## 기술 스택
 
@@ -12,19 +12,22 @@
 
 ## 주요 기능
 
-- 서비스 등록 및 해제 관리
-- 등록된 인스턴스 상태 모니터링
-- 서비스 위치(IP, Port) 정보 제공
+- 마이크로서비스 자동 등록 및 해제 (heartbeat 기반)
+- 등록된 인스턴스 헬스체크 및 상태 모니터링
+- Gateway의 로드밸런싱(`lb://`)을 위한 서비스 위치 정보 제공
 
-## 환경 변수
+## 등록 서비스 목록
 
-| 변수 | 설명 |
-|------|------|
-| `SERVER_PORT` | 서버 포트 (기본: 8761) |
+| 서비스 | 포트 |
+|--------|------|
+| gts-gateway | 8080 |
+| gts-collector-service | 29999 |
+| gts-ai-summary-service | 29998 |
 
-## 로컬 개발
+## Eureka 대시보드
 
-```bash
-./gradlew bootRun
-```
-Dashboard: `http://localhost:8761`
+운영: `http://{EC2_IP}:8761`
+
+## 배포
+
+`main` 브랜치 push → GitHub Actions → ECR push → EC2 자동 배포
